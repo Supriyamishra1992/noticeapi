@@ -1,0 +1,45 @@
+<?php 
+
+namespace Drupal\notice_api\Service;
+
+use GuzzleHttp\ClientInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+class NoticeApiService {
+
+  protected $httpClient;
+
+  public function __construct(ClientInterface $http_client) {
+    $this->httpClient = $http_client;
+  }
+
+  /**
+   * Fetch data from The Notice API.
+   *
+   * @param string $endpoint
+   *   Endpoint path (relative to base URL).
+   * @param array $query
+   *   Query parameters (optional).
+   *
+   * @return array|null
+   *   Decoded response or NULL on error.
+   */
+  public function fetchData(array $query = []): ?array {
+    $base_url = 'https://www.thegazette.co.uk/all-notices/notice/data.json';
+    try {
+        //dump($query);
+        $result = [];
+        $response = $this->httpClient->request('GET', $base_url, [
+            'query' => $query,
+        ]);
+        if ($response->getStatusCode() === 200) {
+    //dump($response->getBody()->getContents());
+        return json_decode($response->getBody()->getContents(), TRUE);
+        }
+    }
+    catch (\Exception $e) {
+      \Drupal::logger('notice_api')->error($e->getMessage());
+    }
+    return NULL;
+  }
+}
