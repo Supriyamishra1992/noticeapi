@@ -1,0 +1,4 @@
+services:
+  notice_api.service:
+    class: Drupal\notice_api\Service\NoticeApiService
+    arguments: ['@http_client']

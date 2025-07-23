@@ -1,0 +1,7 @@
+notice_api.test:
+  path: '/notice-api/test'
+  defaults:
+    _controller: '\Drupal\notice_api\Controller\NoticeApiController::test'
+    _title: 'Notice API Test'
+  requirements:
+    _permission: 'access content'
