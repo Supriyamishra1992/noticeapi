@@ -1,0 +1,5 @@
+name: 'Notice API'
+type: module
+description: 'Cunsume a rest API endpoint for notice.'
+core_version_requirement: ^8 || ^9 || ^10 || ^11
+package: Custom
